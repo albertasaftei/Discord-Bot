@@ -73,6 +73,10 @@ function rpsGame(receivedMessage, arguments) {
     // choices and bot's random choice
     let choices = ["rock", "paper", "scissors"];
     let botChoice = choices[Math.floor(Math.random() * choices.length)];
+    
+    if (arguments[0] !== "scissors" || arguments[0] !== "paper" || arguments[0] !== "rock") {
+        return receivedMessage.channel.send("Error, arguments must be `rock`, `paper` or `scissors`")
+    }
 
     // possible combinations and output result
     if (botChoice === "rock" && arguments[0] === "scissors") {
@@ -93,8 +97,6 @@ function rpsGame(receivedMessage, arguments) {
         receivedMessage.channel.send(`**${botChoice}**\nBv frate, m-ai batut ${receivedMessage.author.toString()}`)
     } if (botChoice === "scissors" && arguments[0] === "scissors") {
         receivedMessage.channel.send(`**${botChoice}**\nEgal ${receivedMessage.author.toString()}`)
-    } if (arguments[0] !== "scissors" || arguments[0] !== "paper" || arguments[0] !== "rock") {
-        receivedMessage.channel.send("Error, arguments must be `rock`, `paper` or `scissors`")
     }
 }
 
