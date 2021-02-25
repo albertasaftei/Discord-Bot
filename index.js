@@ -60,6 +60,8 @@ function customGreetings(receivedMessage) {
         case "Gabitsa":
             receivedMessage.channel.send("cf pitico")
             break;
+        case "69UCI":
+            receivedMessage.challenged.send("du-te si spala masini ochelaristule")
         default:
             receivedMessage.channel.send(`sal bro ${receivedMessage.author.toString()}`)
             break;
