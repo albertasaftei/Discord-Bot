@@ -63,6 +63,9 @@ function customGreetings(receivedMessage) {
         case "69UCI":
             receivedMessage.channel.send("du-te si spala masini ochelaristule")
             break;
+        case "Gogiman":
+            receivedMessage.channel.send("cf frate, bagam niste cox?")
+            break;
         default:
             receivedMessage.channel.send(`sal bro ${receivedMessage.author.toString()}`)
             break;
@@ -124,11 +127,11 @@ function duelGame(receivedMessage) {
         return receivedMessage.reply('You cannot fight a bot!');
 
     //saves the two user ids to variables
-    var fighter1 = receivedMessage.author.id;
-    var fighter2 = user.id;
+    let fighter1 = receivedMessage.author.id;
+    let fighter2 = user.id;
 
     //announces challenge and awaits response
-    var challenged = user.toString();
+    let challenged = user.toString();
     receivedMessage.channel.send(`${challenged}, ${author} has challenged you to a duel. Do you accept the challenge, yes or no?`)
         .then(() => {
             receivedMessage.channel.awaitMessages(response => response.content == 'yes' && response.author.id == fighter2 || response.content == 'no' && response.author.id == fighter2, {
