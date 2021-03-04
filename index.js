@@ -43,7 +43,7 @@ function customGreetings(receivedMessage) {
     //custom greetings
     switch (receivedMessage.author.username) {
         case "alburt":
-            receivedMessage.channel.send("duten plm cioroiule")
+            receivedMessage.channel.send("duten plm cioroiule", {files: ["./coca.jpg"]})
             break;
         case "Aux Heat":
             receivedMessage.channel.send("iesi de aici ghebosule")
@@ -64,7 +64,7 @@ function customGreetings(receivedMessage) {
             receivedMessage.channel.send("du-te si spala masini ochelaristule")
             break;
         case "Gogiman":
-            receivedMessage.channel.send("cf frate, bagam niste cox?")
+            receivedMessage.channel.send("cf frate, ne bagam?", {files: ["./coca.jpg"]})
             break;
         default:
             receivedMessage.channel.send(`sal bro ${receivedMessage.author.toString()}`)
