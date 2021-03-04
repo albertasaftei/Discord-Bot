@@ -43,7 +43,7 @@ function customGreetings(receivedMessage) {
     //custom greetings
     switch (receivedMessage.author.username) {
         case "alburt":
-            receivedMessage.channel.send("duten plm cioroiule", {files: ["./coca.jpg"]})
+            receivedMessage.channel.send("duten plm cioroiule")
             break;
         case "Aux Heat":
             receivedMessage.channel.send("iesi de aici ghebosule")
