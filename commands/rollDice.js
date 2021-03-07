@@ -12,7 +12,11 @@ module.exports = {
     description: 'Roll the dice, if you roll the number you chose, you win some coins',
     callback: async ({message, args}) => {
         let embed = new MessageEmbed()
-            .setTitle("Roll the dice")
+        .setTitle("Roll the dice")
+        .setTimestamp()
+        .setColor("#9939bf")
+        .setFooter('🍆 Girth Gang 🍆');
+        
         if (!args.length || isNaN(args[0]) || isNaN(args[1])) {
             embed
             .setTitle('Invalid Arguments')

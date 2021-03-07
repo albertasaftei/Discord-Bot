@@ -5,7 +5,11 @@ module.exports = {
     expectedArgs: "**<range>**",
     description: 'The argument of this command is the range of the numbers between the bot will choose a random number. Try and guess it.',
     callback: ({message, args}) => {
-        embed.setTitle("Guess the number")
+        let embed = new MessageEmbed()
+        .setTitle("Guess the number")
+        .setTimestamp()
+        .setColor("#9939bf")
+        .setFooter('🍆 Girth Gang 🍆');
         // error handlers
         if (args.length > 1) {
             embed.setDescription("Error, only one argument accepted. Try !guess 69")

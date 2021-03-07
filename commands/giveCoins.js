@@ -10,6 +10,11 @@ module.exports = {
     category: 'Girth Cash',
     description: 'Give GirthCash to another user',
     callback: async ({message, args, client}) => {
+        let embed = new MessageEmbed()
+        .setTitle("Give coins")
+        .setTimestamp()
+        .setColor("#9939bf")
+        .setFooter('🍆 Girth Gang 🍆');
         //error handlers
         if (message.mentions.has(client.user.id)) {
             embed.setDescription(`${message.author}, you can't give cash to a Bot`)
