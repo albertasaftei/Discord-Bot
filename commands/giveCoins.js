@@ -10,14 +10,11 @@ module.exports = {
     category: 'Girth Cash',
     description: 'Give GirthCash to another user',
     callback: async ({message, args, client}) => {
-        let embed = new MessageEmbed()
-        .setTitle("Invalid arguments")
-        .setTimestamp()
-        .setColor(0xff0000)
-        .setFooter('🍆 Girth Gang 🍆');
-
+        //error handlers
         if (message.mentions.has(client.user.id)) {
             embed.setDescription(`${message.author}, you can't give cash to a Bot`)
+                .setTitle("Invalid Arguments")
+                .setColor(0xff0000)
             return message.reply(embed)
         } if (message.mentions.has(message.author.id)) {
             embed.setDescription(`${message.author}, you can't give cash to yourself`)
@@ -37,6 +34,20 @@ module.exports = {
         })
         let balance = author.coins
 
+        let receiver = await profileModel.findOne({
+            userID:message.mentions.users.first().id
+        })
+
+        console.log(receiver)
+
+        if (receiver === null) {
+            embed.setDescription("This username doesn't exist in the database")
+                .setColor(0xff0000)
+            return message.channel.send(embed)
+        }
+
+        //if the amount inserted is minor than the actual balance, continue
+        //if not, return error
         if (args[0] <= balance) {
             try {
                 await profileModel.findOneAndUpdate({
@@ -58,7 +69,8 @@ module.exports = {
                 return message.channel.send(embed)
             }
             
-            return message.channel.send(`${message.author.toString()} has given **${message.mentions.users.first().toString()}** ${args[0]} GirthCash`)
+            embed.setDescription(`${message.author.toString()} has given **${message.mentions.users.first().toString()}** ${args[0]} GirthCash`)
+            return message.channel.send(embed)
 
         } else {
             return message.reply("You don't have enough money")
@@ -67,10 +79,9 @@ module.exports = {
     },
     error: ({ error, message }) => {
         if (error === 'INVALID ARGUMENTS') {
-        let embed = new MessageEmbed()
-        .setTitle('Invalid Arguments')
-        .setDescription(`${message.author}, something went wrong, try **!give/!g <amount> <@username>**`)
-        .setColor(0xff0000)
+        embed.setTitle('Invalid Arguments')
+            .setDescription(`${message.author}, something went wrong, try **!give/!g <amount> <@username>**`)
+            .setColor(0xff0000)
 
         message.reply(embed)
         }
