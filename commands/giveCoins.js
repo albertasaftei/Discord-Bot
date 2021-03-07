@@ -35,6 +35,18 @@ module.exports = {
         })
         let balance = author.coins
 
+        let receiver = await profileModel.findOne({
+            userID:message.mentions.users.first().id
+        })
+
+        console.log(receiver)
+
+        if (receiver === null) {
+            embed.setDescription("This username doesn't exist in the database")
+                .setColor(0xff0000)
+            return message.channel.send(embed)
+        }
+
         //if the amount inserted is minor than the actual balance, continue
         //if not, return error
         if (args[0] <= balance) {
