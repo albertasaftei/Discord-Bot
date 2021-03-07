@@ -1,5 +1,6 @@
 const profileModel = require("../models/profileSchema")
 const { MessageEmbed } = require('discord.js')
+const utilities = require("../config.json")
 
 module.exports = {
     name: 'roll',
@@ -12,16 +13,16 @@ module.exports = {
     description: 'Roll the dice, if you roll the number you chose, you win some coins',
     callback: async ({message, args}) => {
         let embed = new MessageEmbed()
-        .setTitle("Roll the dice")
+        .setTitle("🎲 Roll the dice 🎲")
         .setTimestamp()
-        .setColor("#9939bf")
+        .setColor(utilities.colors.default)
         .setFooter('🍆 Girth Gang 🍆');
         
-        if (!args.length || isNaN(args[0]) || isNaN(args[1])) {
+        if (args.length == 1 || isNaN(args[0]) || isNaN(args[1])) {
             embed
             .setTitle('Invalid Arguments')
             .setDescription(` ${message.author}, something went wrong, try **!roll/!r <dice number> <balance>**`)
-            .setColor(0xff0000)
+            .setColor(utilities.colors.red)
 
             return message.reply(embed)
         }
@@ -49,7 +50,7 @@ module.exports = {
                 }
 
                 embed.setDescription(`${message.author}, congratulations, you won **${args[1]*2}** Girth Cash 💸`)
-                    .setColor("#2deb36")
+                    .setColor(utilities.colors.green)
                 return message.channel.send(embed)
             } else {
                 await profileModel.findOneAndUpdate({
@@ -63,7 +64,7 @@ module.exports = {
                         { name: '🎲 Bot 🎲', value: `${number}`},
                         { name: 'Your choice', value: `${args[0]}`},
                     )
-                    .setColor("#e8e83f")
+                    .setColor(utilities.colors.default)
                 return message.reply(embed)
             }
         } else {
@@ -74,7 +75,7 @@ module.exports = {
         if (error === 'INVALID ARGUMENTS') {
             embed.setTitle('Invalid Arguments')
                 .setDescription(`${message.author}, something went wrong, try **!roll/!r <dice number> <balance>**`)
-                .setColor(0xff0000)
+                .setColor(utilities.colors.red)
 
         message.reply(embed)
         }

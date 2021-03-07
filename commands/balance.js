@@ -1,5 +1,6 @@
 const profileModel = require("../models/profileSchema")
 const { MessageEmbed } = require('discord.js')
+const utilities = require("../config.json")
 
 module.exports = {
     aliases: ['bal', 'b'],
@@ -10,7 +11,7 @@ module.exports = {
         let embed = new MessageEmbed()
         .setTitle("Balance")
         .setTimestamp()
-        .setColor("#9939bf")
+        .setColor(utilities.colors.default)
         .setFooter('🍆 Girth Gang 🍆');
 
         let user = await profileModel.findOne({ userID: message.author.id })

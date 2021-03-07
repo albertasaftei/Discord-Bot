@@ -1,4 +1,5 @@
 const { MessageEmbed } = require('discord.js')
+const utilities = require('../config.json')
 
 module.exports = {
     category: 'Girth Gang',
@@ -8,13 +9,13 @@ module.exports = {
         let embed = new MessageEmbed()
         .setTitle("Guess the number")
         .setTimestamp()
-        .setColor("#9939bf")
+        .setColor(utilities.colors.default)
         .setFooter('🍆 Girth Gang 🍆');
         // error handlers
         if (args.length > 1) {
             embed.setDescription("Error, only one argument accepted. Try !guess 69")
             .setTitle("Invalid Arguments")
-                .setColor(0xff0000)
+                .setColor(utilities.colors.red)
             return message.channel.send(embed)
         } if (args.length <= 0) {
             embed.setDescription("Argument must be higher than 0")

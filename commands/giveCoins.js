@@ -1,5 +1,6 @@
 const profileModel = require("../models/profileSchema")
 const { MessageEmbed } = require('discord.js')
+const utilities = require("../config.json")
 
 module.exports = {
     name: 'give',
@@ -13,13 +14,13 @@ module.exports = {
         let embed = new MessageEmbed()
         .setTitle("Give coins")
         .setTimestamp()
-        .setColor("#9939bf")
+        .setColor(utilities.colors.default)
         .setFooter('🍆 Girth Gang 🍆');
         //error handlers
         if (message.mentions.has(client.user.id)) {
             embed.setDescription(`${message.author}, you can't give cash to a Bot`)
                 .setTitle("Invalid Arguments")
-                .setColor(0xff0000)
+                .setColor(utilities.colors.red)
             return message.reply(embed)
         } if (message.mentions.has(message.author.id)) {
             embed.setDescription(`${message.author}, you can't give cash to yourself`)
@@ -43,11 +44,8 @@ module.exports = {
             userID:message.mentions.users.first().id
         })
 
-        console.log(receiver)
-
         if (receiver === null) {
             embed.setDescription("This username doesn't exist in the database")
-                .setColor(0xff0000)
             return message.channel.send(embed)
         }
 
@@ -75,6 +73,7 @@ module.exports = {
             }
             
             embed.setDescription(`${message.author.toString()} has given **${message.mentions.users.first().toString()}** ${args[0]} GirthCash`)
+                .setColor(utilities.colors.green)
             return message.channel.send(embed)
 
         } else {
@@ -86,7 +85,7 @@ module.exports = {
         if (error === 'INVALID ARGUMENTS') {
         embed.setTitle('Invalid Arguments')
             .setDescription(`${message.author}, something went wrong, try **!give/!g <amount> <@username>**`)
-            .setColor(0xff0000)
+            .setColor(utilities.colors.red)
 
         message.reply(embed)
         }

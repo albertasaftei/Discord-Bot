@@ -1,5 +1,6 @@
 const profileModel = require("../../models/profileSchema")
 const { MessageEmbed } = require('discord.js')
+const utilities = require('../../config.json')
 
 module.exports = {
     name: 'add',
@@ -11,12 +12,12 @@ module.exports = {
         let embed = new MessageEmbed()
         .setTitle("Add coins")
         .setTimestamp()
-        .setColor("#9939bf")
+        .setColor(utilities.colors.default)
         .setFooter('🍆 Girth Gang 🍆');
 
         if (message.mentions.users.first() === undefined) {
             embed.setDescription("This user doesn't exist")
-                .setColor(0xff0000)
+                .setColor(utilities.colors.red)
             return message.channel.send(embed)
         }
         if(args[0] <= 0) {
@@ -33,11 +34,12 @@ module.exports = {
                 })
             } catch(err) {
                 embed.setDescription("Something went wrong, check logs")
-                .setColor(0xff0000)
+                .setColor(utilities.colors.red)
                 return message.channel.send(embed)
             }
 
             embed.setDescription(`Admin has added ${args[0]} GirthCash to ${message.mentions.users.first()}`)
+                .setColor(utilities.colors.green)
             return message.channel.send(embed)
         }
     }

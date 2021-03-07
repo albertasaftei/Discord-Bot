@@ -1,5 +1,6 @@
 const profileModel = require("../../models/profileSchema")
 const { MessageEmbed } = require('discord.js')
+const utilities = require("../../config.json")
 
 module.exports = {
     name: 'badmin',
@@ -10,7 +11,7 @@ module.exports = {
     callback: async ({message}) => {
         let embed = new MessageEmbed()
         .setTitle("Balance Admin")
-        .setColor("#9939bf")
+        .setColor(utilities.colors.default)
         .setTimestamp()
         .setFooter('🍆 Girth Gang 🍆');
 
@@ -26,7 +27,7 @@ module.exports = {
             }
         } catch(err) {
             embed.setDescription("Something went wrong, check logs.")
-                .setColor(0xff0000)
+                .setColor(utilities.colors.red)
             return message.channel.send(embed)
         }
     }
