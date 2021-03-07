@@ -6,6 +6,7 @@ module.exports = {
     aliases: ['r'],
     minArgs: 2,
     maxArgs: 2,
+    expectedArgs: "**<dice number> <bet amount>**",
     errorMsg: 'Something went wrong, try !roll/!r <dice number> <balance>',
     category: 'Girth Gang',
     description: 'Roll the dice, if you roll the number you chose, you win some coins',

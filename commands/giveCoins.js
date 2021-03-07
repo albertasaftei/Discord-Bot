@@ -6,8 +6,9 @@ module.exports = {
     aliases: ['g', 'taxaprotectie'],
     minArgs: 1,
     maxArgs: 2,
+    expectedArgs: "**<amount> <@username>**",
     category: 'Girth Cash',
-    description: 'Give Girth Cash to another user',
+    description: 'Give GirthCash to another user',
     callback: async ({message, args, client}) => {
         let embed = new MessageEmbed()
         .setTitle("Invalid arguments")
@@ -19,7 +20,7 @@ module.exports = {
             embed.setDescription(`${message.author}, you can't give cash to a Bot`)
             return message.reply(embed)
         } if (message.mentions.has(message.author.id)) {
-            embed.setDescription(`${message.author}, you can't give money to yourself`)
+            embed.setDescription(`${message.author}, you can't give cash to yourself`)
             return message.reply(embed)
         } if (!args.length) {
             embed.setDescription(`${message.author}, try **!give/g <number> <@user>**`)
@@ -54,7 +55,7 @@ module.exports = {
                     }
                 })
             } catch(err) {
-                return message.channel.send("Something went wrong")
+                return message.channel.send(embed)
             }
             
             return message.channel.send(`${message.author.toString()} has given **${message.mentions.users.first().toString()}** ${args[0]} GirthCash`)

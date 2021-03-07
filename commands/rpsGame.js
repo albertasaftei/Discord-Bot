@@ -1,6 +1,7 @@
 module.exports = {
     name: 'rps',
     maxArgs: 1,
+    expectedArgs: "**<rock / paper / scissors>**",
     category: 'Girth Gang',
     description: 'rock paper scissors game with the bot',
     callback: ({message, args}) => {

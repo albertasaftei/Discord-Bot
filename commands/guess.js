@@ -1,5 +1,6 @@
 module.exports = {
     category: 'Girth Gang',
+    expectedArgs: "**<range>**",
     description: 'The argument of this command is the range of the numbers between the bot will choose a random number. Try and guess it.',
     callback: ({message, args}) => {
         // error handlers
