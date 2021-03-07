@@ -1,5 +1,5 @@
 const profileModel = require("../../models/profileSchema")
-const { MessageEmbed } = require('discord.js')
+const embed = require("../../models/embed");
 
 module.exports = {
     name: 'badmin',
@@ -8,12 +8,7 @@ module.exports = {
     category: "Admin",
     description: 'See tagged user balance',
     callback: async ({message}) => {
-        let embed = new MessageEmbed()
-        .setTitle("Balance Admin")
-        .setColor("#9939bf")
-        .setTimestamp()
-        .setFooter('🍆 Girth Gang 🍆');
-
+        embed.setTitle("User Balance")
         try {
             let user = await profileModel.findOne({ userID: message.mentions.users.first().id })
     

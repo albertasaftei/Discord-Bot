@@ -1,5 +1,5 @@
 const profileModel = require("../models/profileSchema")
-const { MessageEmbed, Message } = require('discord.js')
+const embed = require("../models/embed");
 
 module.exports = {
     name: 'roll',
@@ -11,11 +11,7 @@ module.exports = {
     category: 'Girth Gang',
     description: 'Roll the dice, if you roll the number you chose, you win some coins',
     callback: async ({message, args}) => {
-
-        let embed = new MessageEmbed()
-        .setTimestamp()
-        .setFooter('🍆 Girth Gang 🍆');
-
+        embed.setTitle("Roll the dice")
         if (!args.length || isNaN(args[0]) || isNaN(args[1])) {
             embed
             .setTitle('Invalid Arguments')
@@ -44,7 +40,7 @@ module.exports = {
                     })
                     
                 } catch (err) {
-                    message.channel.send("Something went wrong.")
+                    message.channel.send("Something went wrong, check logs.")
                 }
             } else {
                 await profileModel.findOneAndUpdate({
@@ -54,8 +50,7 @@ module.exports = {
                         coins: -args[1]
                     }
                 })
-                embed.setTitle('Roll the Dice')
-                    .addFields(
+                embed.addFields(
                         { name: '🎲 Bot 🎲', value: `${number}`},
                         { name: 'Your choice', value: `${args[0]}`},
                     )
@@ -66,18 +61,16 @@ module.exports = {
             return message.reply("You don't have enough Girth Cash")
         }
 
-        embed.setTitle("Roll the Dice")
-            .setDescription(`${message.author}, congratulations, you won **${args[1]*2}** Girth Cash 💸`)
+        embed.setDescription(`${message.author}, congratulations, you won **${args[1]*2}** Girth Cash 💸`)
             .setColor("#2deb36")
 
         return message.reply(embed)
     },
     error: ({ error, message }) => {
         if (error === 'INVALID ARGUMENTS') {
-        const embed = new MessageEmbed()
-        .setTitle('Invalid Arguments')
-        .setDescription(`${message.author}, something went wrong, try **!roll/!r <dice number> <balance>**`)
-        .setColor(0xff0000)
+            embed.setTitle('Invalid Arguments')
+                .setDescription(`${message.author}, something went wrong, try **!roll/!r <dice number> <balance>**`)
+                .setColor(0xff0000)
 
         message.reply(embed)
         }

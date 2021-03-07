@@ -1,5 +1,6 @@
 const profileModel = require("../models/profileSchema")
-const { MessageEmbed } = require('discord.js')
+const embed = require("../models/embed");
+    embed.setTitle("Balance")
 
 module.exports = {
     aliases: ['bal', 'b'],
@@ -7,12 +8,6 @@ module.exports = {
     maxArgs: 0,
     description: 'Check user balance',
     callback: async ({message}) => {
-        let embed = new MessageEmbed()
-        .setTitle("Balance")
-        .setTimestamp()
-        .setColor("#9939bf")
-        .setFooter('🍆 Girth Gang 🍆');
-
         let user = await profileModel.findOne({ userID: message.author.id })
 
         if(user) {
