@@ -1,10 +1,6 @@
 const profileModel = require("../models/profileSchema")
-<<<<<<< HEAD
 const { MessageEmbed } = require('discord.js')
 const utilities = require("../config.json")
-=======
-const embed = require("../models/embed");
->>>>>>> 934ac7b38228a7aaa916a16e79b510b0ef01c3d2
 
 module.exports = {
     name: 'give',
@@ -15,24 +11,16 @@ module.exports = {
     category: 'Girth Cash',
     description: 'Give GirthCash to another user',
     callback: async ({message, args, client}) => {
-<<<<<<< HEAD
         let embed = new MessageEmbed()
         .setTitle("Give coins")
         .setTimestamp()
         .setColor(utilities.colors.default)
         .setFooter('🍆 Girth Gang 🍆');
-=======
-        embed.setTitle("Give coins")
->>>>>>> 934ac7b38228a7aaa916a16e79b510b0ef01c3d2
         //error handlers
         if (message.mentions.has(client.user.id)) {
             embed.setDescription(`${message.author}, you can't give cash to a Bot`)
                 .setTitle("Invalid Arguments")
-<<<<<<< HEAD
                 .setColor(utilities.colors.red)
-=======
-                .setColor(0xff0000)
->>>>>>> 934ac7b38228a7aaa916a16e79b510b0ef01c3d2
             return message.reply(embed)
         } if (message.mentions.has(message.author.id)) {
             embed.setDescription(`${message.author}, you can't give cash to yourself`)
@@ -56,16 +44,8 @@ module.exports = {
             userID:message.mentions.users.first().id
         })
 
-<<<<<<< HEAD
         if (receiver === null) {
             embed.setDescription("This username doesn't exist in the database")
-=======
-        console.log(receiver)
-
-        if (receiver === null) {
-            embed.setDescription("This username doesn't exist in the database")
-                .setColor(0xff0000)
->>>>>>> 934ac7b38228a7aaa916a16e79b510b0ef01c3d2
             return message.channel.send(embed)
         }
 
@@ -93,10 +73,7 @@ module.exports = {
             }
             
             embed.setDescription(`${message.author.toString()} has given **${message.mentions.users.first().toString()}** ${args[0]} GirthCash`)
-<<<<<<< HEAD
                 .setColor(utilities.colors.green)
-=======
->>>>>>> 934ac7b38228a7aaa916a16e79b510b0ef01c3d2
             return message.channel.send(embed)
 
         } else {
@@ -108,11 +85,7 @@ module.exports = {
         if (error === 'INVALID ARGUMENTS') {
         embed.setTitle('Invalid Arguments')
             .setDescription(`${message.author}, something went wrong, try **!give/!g <amount> <@username>**`)
-<<<<<<< HEAD
             .setColor(utilities.colors.red)
-=======
-            .setColor(0xff0000)
->>>>>>> 934ac7b38228a7aaa916a16e79b510b0ef01c3d2
 
         message.reply(embed)
         }

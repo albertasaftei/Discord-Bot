@@ -1,33 +1,21 @@
-<<<<<<< HEAD
 const { MessageEmbed } = require('discord.js')
 const utilities = require('../config.json')
-=======
-const embed = require("../models/embed");
->>>>>>> 934ac7b38228a7aaa916a16e79b510b0ef01c3d2
 
 module.exports = {
     category: 'Girth Gang',
     expectedArgs: "**<range>**",
     description: 'The argument of this command is the range of the numbers between the bot will choose a random number. Try and guess it.',
     callback: ({message, args}) => {
-<<<<<<< HEAD
         let embed = new MessageEmbed()
         .setTitle("Guess the number")
         .setTimestamp()
         .setColor(utilities.colors.default)
         .setFooter('🍆 Girth Gang 🍆');
-=======
-        embed.setTitle("Guess the number")
->>>>>>> 934ac7b38228a7aaa916a16e79b510b0ef01c3d2
         // error handlers
         if (args.length > 1) {
             embed.setDescription("Error, only one argument accepted. Try !guess 69")
             .setTitle("Invalid Arguments")
-<<<<<<< HEAD
                 .setColor(utilities.colors.red)
-=======
-                .setColor(0xff0000)
->>>>>>> 934ac7b38228a7aaa916a16e79b510b0ef01c3d2
             return message.channel.send(embed)
         } if (args.length <= 0) {
             embed.setDescription("Argument must be higher than 0")

@@ -10,7 +10,7 @@ module.exports = {
     expectedArgs: "**<dice number> <bet amount>**",
     errorMsg: 'Something went wrong, try !roll/!r <dice number> <balance>',
     category: 'Girth Gang',
-    description: 'Roll the dice, if you roll the number you chose, you win some coins',
+    description: 'Roll the dice, if you win, you double the bet',
     callback: async ({message, args}) => {
         let embed = new MessageEmbed()
         .setTitle("🎲 Roll the dice 🎲")
@@ -18,16 +18,16 @@ module.exports = {
         .setColor(utilities.colors.default)
         .setFooter('🍆 Girth Gang 🍆');
         
-        if (args.length == 1 || isNaN(args[0]) || isNaN(args[1])) {
+        if (!args.length || isNaN(args[0]) || isNaN(args[1])) {
             embed
             .setTitle('Invalid Arguments')
             .setDescription(` ${message.author}, something went wrong, try **!roll/!r <dice number> <balance>**`)
             .setColor(utilities.colors.red)
 
-            return message.reply(embed)
+            return message.channe.send(embed)
         }
 
-        let number = Math.floor(Math.random() * 6) + 1;
+        let number = Math.floor(Math.random() * 1) + 1;
 
         let author = await profileModel.findOne({
             userID: message.author.id,
@@ -35,7 +35,7 @@ module.exports = {
         let balance = author.coins
 
         if (args[1] <= balance) {
-            if (args[0] === number) {
+            if (args[0] == number) {
                 try {
                     await profileModel.findOneAndUpdate({
                         userID: message.author.id
@@ -65,7 +65,7 @@ module.exports = {
                         { name: 'Your choice', value: `${args[0]}`},
                     )
                     .setColor(utilities.colors.default)
-                return message.reply(embed)
+                return message.channel.send(embed)
             }
         } else {
             return message.reply("You don't have enough Girth Cash")

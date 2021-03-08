@@ -7,7 +7,7 @@ module.exports = {
     minArgs: 1,
     maxArgs: 1,
     category: "Girth Gang",
-    description: "Gamble a certain amount of money. If you win, your gambled amount will be doubled.",
+    description: "Gamble a certain amount of money. If you win, you'll get the gambled amount.",
     expectedArgs: "<coins amount>",
     callback: async ({message, args}) => {
         let embed = new MessageEmbed()
@@ -41,7 +41,7 @@ module.exports = {
                                 userID: message.author.id
                             }, {
                                 $inc: {
-                                    coins: balance*2
+                                    coins: balance
                                 }
                             })
                         } catch(err) {
@@ -50,7 +50,7 @@ module.exports = {
                         author = await profileModel.findOne({
                             userID: message.author.id,
                         })
-                        embed.setDescription(`${message.author}, congratulations! You won **${author.coins*2}** GirthCash!`)
+                        embed.setDescription(`${message.author}, congratulations! You won **${balance}** GirthCash!`)
                         .addField("Your current balance", `**${author.coins}** GirthCash`)
                         .setColor(utilities.colors.green)
                         
@@ -78,7 +78,7 @@ module.exports = {
                             userID: message.author.id
                         }, {
                             $inc: {
-                                coins: args[0]*2
+                                coins: args[0]
                             }
                         })
                     } catch(err) {
@@ -87,7 +87,7 @@ module.exports = {
                     author = await profileModel.findOne({
                         userID: message.author.id,
                     })
-                    embed.setDescription(`${message.author}, congratulations! You won **${args[0]*2}** GirthCash!`)
+                    embed.setDescription(`${message.author}, congratulations! You won **${args[0]}** GirthCash!`)
                     .addField("Your current balance", `**${author.coins}** GirthCash`)
                     .setColor(utilities.colors.green)
                     return message.channel.send(embed)
