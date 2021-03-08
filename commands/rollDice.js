@@ -27,7 +27,7 @@ module.exports = {
             return message.channe.send(embed)
         }
 
-        let number = Math.floor(Math.random() * 1) + 1;
+        let number = Math.floor(Math.random() * 6) + 1;
 
         let author = await profileModel.findOne({
             userID: message.author.id,
