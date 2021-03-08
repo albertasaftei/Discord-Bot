@@ -1,10 +1,6 @@
 const profileModel = require("../models/profileSchema")
-<<<<<<< HEAD
 const { MessageEmbed } = require('discord.js')
 const utilities = require("../config.json")
-=======
-const embed = require("../models/embed");
->>>>>>> 934ac7b38228a7aaa916a16e79b510b0ef01c3d2
 
 module.exports = {
     name: 'roll',
@@ -16,7 +12,6 @@ module.exports = {
     category: 'Girth Gang',
     description: 'Roll the dice, if you roll the number you chose, you win some coins',
     callback: async ({message, args}) => {
-<<<<<<< HEAD
         let embed = new MessageEmbed()
         .setTitle("🎲 Roll the dice 🎲")
         .setTimestamp()
@@ -24,10 +19,6 @@ module.exports = {
         .setFooter('🍆 Girth Gang 🍆');
         
         if (args.length == 1 || isNaN(args[0]) || isNaN(args[1])) {
-=======
-        embed.setTitle("Roll the dice")
-        if (!args.length || isNaN(args[0]) || isNaN(args[1])) {
->>>>>>> 934ac7b38228a7aaa916a16e79b510b0ef01c3d2
             embed
             .setTitle('Invalid Arguments')
             .setDescription(` ${message.author}, something went wrong, try **!roll/!r <dice number> <balance>**`)
@@ -79,24 +70,12 @@ module.exports = {
         } else {
             return message.reply("You don't have enough Girth Cash")
         }
-<<<<<<< HEAD
-=======
-
-        embed.setDescription(`${message.author}, congratulations, you won **${args[1]*2}** Girth Cash 💸`)
-            .setColor("#2deb36")
-
-        return message.reply(embed)
->>>>>>> 934ac7b38228a7aaa916a16e79b510b0ef01c3d2
     },
     error: ({ error, message }) => {
         if (error === 'INVALID ARGUMENTS') {
             embed.setTitle('Invalid Arguments')
                 .setDescription(`${message.author}, something went wrong, try **!roll/!r <dice number> <balance>**`)
-<<<<<<< HEAD
                 .setColor(utilities.colors.red)
-=======
-                .setColor(0xff0000)
->>>>>>> 934ac7b38228a7aaa916a16e79b510b0ef01c3d2
 
         message.reply(embed)
         }
