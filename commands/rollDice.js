@@ -73,6 +73,12 @@ module.exports = {
     },
     error: ({ error, message }) => {
         if (error === 'INVALID ARGUMENTS') {
+        let embed = new MessageEmbed()
+            .setTitle("🎲 Roll the dice 🎲")
+            .setTimestamp()
+            .setColor(utilities.colors.default)
+            .setFooter('🍆 Girth Gang 🍆');
+
             embed.setTitle('Invalid Arguments')
                 .setDescription(`${message.author}, something went wrong, try **!roll/!r <dice number> <balance>**`)
                 .setColor(utilities.colors.red)

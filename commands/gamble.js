@@ -33,9 +33,9 @@ module.exports = {
                 embed.setDescription("Something went wrong, try **!gamble <coins amount>**")
                 return message.channel.send(embed)
             } if (args[0] === "all") {
-                let random = Math.floor(Math.random() < 0.5)
+                let random = Math.floor(Math.random() * 100)
                 console.log(random)
-                if (random == 1) {
+                if (random <= 48) {
                         try {
                             await profileModel.findOneAndUpdate({
                                 userID: message.author.id
