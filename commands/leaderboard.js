@@ -12,7 +12,7 @@ const fetchTopMembers = async () => {
     for (let i = 0; i < leaderboard.length; i++) {
         const {userID, coins} = leaderboard[i];
 
-        finalMessage += `#${i + 1} <@${userID}> with ${coins} GirthCash\n`
+        finalMessage += `#${i + 1} <@${userID}> with **${coins}** GirthCash\n`
     }
 
     return finalMessage
@@ -48,7 +48,7 @@ const updateLeaderboard = async (client) => {
     }
 
     setTimeout(() => {
-        updateLeaderboard()
+        updateLeaderboard(client)
     }, 1000 * 60 * 60);
 }
 

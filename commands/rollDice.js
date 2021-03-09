@@ -61,7 +61,7 @@ module.exports = {
                     }
                 })
                 embed.addFields(
-                        { name: '🎲 Bot 🎲', value: `${number}`},
+                        { name: 'Bot', value: `${number}`},
                         { name: 'Your choice', value: `${args[0]}`},
                     )
                     .setColor(utilities.colors.default)
