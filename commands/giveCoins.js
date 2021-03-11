@@ -16,22 +16,32 @@ module.exports = {
         .setTimestamp()
         .setColor(utilities.colors.default)
         .setFooter('🍆 Girth Gang 🍆');
+        
         //error handlers
         if (message.mentions.has(client.user.id)) {
             embed.setDescription(`${message.author}, you can't give cash to a Bot`)
                 .setTitle("Invalid Arguments")
                 .setColor(utilities.colors.red)
             return message.reply(embed)
+        } if (!message.mentions.has(message.mentions.users.first())) {
+            embed.setDescription(`${message.author}, try **!give / !g <number> <@user>**`)
+                .setTitle("Invalid Arguments")
+                .setColor(utilities.colors.red)
+            return message.reply(embed)
         } if (message.mentions.has(message.author.id)) {
             embed.setDescription(`${message.author}, you can't give cash to yourself`)
-            return message.reply(embed)
-        } if (!args.length) {
-            embed.setDescription(`${message.author}, try **!give/g <number> <@user>**`)
+                .setTitle("Invalid Arguments")
+                .setColor(utilities.colors.red)
             return message.reply(embed)
         } if (isNaN(args[0])) {
+            embed.setDescription(`${message.author}, try **!give / !g <number> <@user>**`)
+                .setTitle("Invalid Arguments")
+                .setColor(utilities.colors.red)
             return message.reply(embed)
-        } if (args[0] < 0) {
+        } if (parseInt(args[0]) < 0) {
             embed.setDescription(`${message.author}, insert a number higher than 0`)
+                .setTitle("Invalid Arguments")
+                .setColor(utilities.colors.red)
             return message.reply(embed)
         }
 
@@ -77,14 +87,22 @@ module.exports = {
             return message.channel.send(embed)
 
         } else {
-            return message.reply("You don't have enough money")
+            embed.setDescription(`${message.author}, you don't have enough money`)
+                .setTitle("Invalid Arguments")
+                .setColor(utilities.colors.red)
+            return message.reply(embed)
         }
         
     },
     error: ({ error, message }) => {
+        let embed = new MessageEmbed()
+            .setTimestamp()
+            .setColor(utilities.colors.default)
+            .setFooter('🍆 Girth Gang 🍆');
+            
         if (error === 'INVALID ARGUMENTS') {
         embed.setTitle('Invalid Arguments')
-            .setDescription(`${message.author}, something went wrong, try **!give/!g <amount> <@username>**`)
+            .setDescription(`${message.author}, try **!give / !g <amount> <@username>**`)
             .setColor(utilities.colors.red)
 
         message.reply(embed)
