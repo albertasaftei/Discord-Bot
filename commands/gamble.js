@@ -32,7 +32,13 @@ module.exports = {
             if (!args[0].length) { //if argument doesn't exist stop
                 embed.setDescription("Something went wrong, try **!gamble <coins amount>**")
                 return message.channel.send(embed)
-            } if (args[0] === "all") {
+            } if (args[0] === "all") { //if arguments equals to "all" but balance is zero, return error
+                if (balance == 0) {
+                    embed.setDescription("Your GirthCash balance is **0**")
+                        .setColor(utilities.colors.red)
+                    return message.channel.send(embed)
+                }
+                
                 let random = Math.floor(Math.random() * 100)
                 console.log(random)
                 if (random <= 48) {
