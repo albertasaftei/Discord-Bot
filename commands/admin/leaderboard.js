@@ -1,6 +1,6 @@
-const profileModel = require("../models/profileSchema")
+const profileModel = require("../../models/profileSchema")
 const { MessageEmbed } = require('discord.js')
-const utilities = require('../config.json');
+const utilities = require('../../config.json');
 
 const fetchTopMembers = async () => {
     let finalMessage = ""
@@ -22,8 +22,9 @@ const updateLeaderboard = async (client) => {
     let embed = new MessageEmbed()
         .setTitle("Leaderboard")
         .setTimestamp()
-        .setColor(utilities.colors.default)
+        .setColor(utilities.colors.admin)
         .setFooter('🍆 Girth Gang 🍆');
+
     const results = await profileModel.find({})
 
     for(const result of results) {
@@ -57,7 +58,16 @@ module.exports = {
     category: "Admin",
     description: "Set up the leaderboard",
     permissions: ['ADMINISTRATOR'],
-    callback: async ({client}) => {
+    callback: async ({message, client}) => {
+        let embed = new MessageEmbed()
+        .setTitle("Leaderboard")
+        .setTimestamp()
+        .setColor(utilities.colors.admin)
+        .setFooter('🍆 Girth Gang 🍆');
+
         updateLeaderboard(client)
+
+        embed.setDescription("Leaderboard has been set")
+        return message.channel.send(embed)
     }
 }

@@ -7,11 +7,11 @@ module.exports = {
     permissions: ['ADMINISTRATOR'],
     expectedArgs: "**<@username>**",
     category: "Admin",
-    description: 'See tagged user balance',
+    description: "See tagged user's balance",
     callback: async ({message}) => {
         let embed = new MessageEmbed()
         .setTitle("Balance Admin")
-        .setColor(utilities.colors.default)
+        .setColor(utilities.colors.admin)
         .setTimestamp()
         .setFooter('🍆 Girth Gang 🍆');
 
@@ -22,7 +22,7 @@ module.exports = {
                 embed.setDescription(`${message.mentions.users.first()} has **${user.coins}** GirthCash 💸`)
                 message.channel.send(embed)
             } else {
-                embed.setDescription("This user doesn't exist")
+                embed.setDescription("This user doesn't exist in the database")
                 message.channel.send(embed)
             }
         } catch(err) {

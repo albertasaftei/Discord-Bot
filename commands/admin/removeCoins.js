@@ -12,7 +12,7 @@ module.exports = {
         let embed = new MessageEmbed()
         .setTitle("Remove coins")
         .setTimestamp()
-        .setColor(utilities.colors.default)
+        .setColor(utilities.colors.admin)
         .setFooter('🍆 Girth Gang 🍆');
         
         const mentionedUser = await profileModel.findOne({
@@ -51,6 +51,7 @@ module.exports = {
             }
 
             embed.setDescription(`Admin has removed all ${message.mentions.users.first()}'s GirtCash`)
+                .setColor(utilities.colors.admin)
             return message.channel.send(embed)
         }
 

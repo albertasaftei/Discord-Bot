@@ -41,15 +41,16 @@ client.on('message', async (receivedMessage) => {
     let profileData
 
         try{
-            profileData = await profileModel.findOne({ userID: receivedMessage.author.id })
-            if(!profileData) {
-                let profile = await profileModel.create({
-                    userID: receivedMessage.author.id,
-                    serverID: receivedMessage.guild.id,
-                    coins: 1000
-                });
-                profile.save()
-                console.log(profileData)
+            if (!receivedMessage.author.bot) {
+                profileData = await profileModel.findOne({ userID: receivedMessage.author.id })
+                if(!profileData) {
+                    let profile = await profileModel.create({
+                        userID: receivedMessage.author.id,
+                        serverID: receivedMessage.guild.id,
+                        coins: 1000
+                    });
+                    profile.save()
+                }
             }
         }catch(err) {
             console.log(err)

@@ -12,7 +12,7 @@ module.exports = {
         let embed = new MessageEmbed()
         .setTitle("Add coins")
         .setTimestamp()
-        .setColor(utilities.colors.default)
+        .setColor(utilities.colors.admin)
         .setFooter('🍆 Girth Gang 🍆');
 
         if (message.mentions.users.first() === undefined) {
