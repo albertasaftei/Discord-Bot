@@ -16,7 +16,7 @@ const setRewards = async (client) => {
                     userID: id
                 }, {
                     $inc: {
-                        coins: 500
+                        coins: 100
                     }
                 })
             }

@@ -16,7 +16,6 @@
   "dependencies": {
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
-    "mongoose": "^5.11.19",
     "wokcommands": "^1.2.3"
   },
   "description": ""

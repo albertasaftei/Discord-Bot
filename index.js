@@ -2,14 +2,23 @@ require('dotenv').config();
 const Discord = require('discord.js')
 const client = new Discord.Client()
 const WOKCommands = require('wokcommands')
-const mongoose = require('mongoose')
 const profileModel = require("./models/profileSchema")
 
 client.on('ready', () => {
-    console.log(`Merge botu ${client.user.tag}`)
+    console.log(`Bot ${client.user.tag} connected`)
+
+    const dbOptions = {
+        keepAlive: true,
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false,
+    }
+
     new WOKCommands(client, {
         commandsDir: 'commands',
+        dbOptions
     })
+    .setMongoPath(process.env.MONGO_SRV)
     .setCategorySettings([
         {
             name: 'Admin',
@@ -24,17 +33,6 @@ client.on('ready', () => {
             emoji: '💸'
         }
     ])
-
-    mongoose.connect(process.env.MONGO_SRV, {
-        keepAlive:true,
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useFindAndModify: false
-    }).then(() => {
-        console.log("Connected to the DB")
-    }).catch((err) => {
-        console.error(err)
-    })
 })
 
 client.on('message', async (receivedMessage) => {
