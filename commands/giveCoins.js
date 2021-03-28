@@ -79,7 +79,7 @@ module.exports = {
                     }
                 })
             } catch(err) {
-                return message.channel.send(embed)
+                return console.log(err)
             }
             
             embed.setDescription(`${message.author.toString()} has given **${message.mentions.users.first().toString()}** ${args[0]} GirthCash`)

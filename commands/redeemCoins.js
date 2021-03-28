@@ -30,7 +30,7 @@ module.exports = {
                 }
             })
             
-            embed.setDescription("You received **10 000** Girthcash 💸")
+            embed.setDescription("You received **10.000** Girthcash 💸")
             return message.channel.send(embed)
         } else {
             embed.setDescription("Looks like you are not inserted in the database")
@@ -54,7 +54,7 @@ module.exports = {
 
         if (error === "INVALID ARGUMENTS") {
             embed.setTitle("Invalid Arguments")
-                .setDescription("This command doens't require any arguments")
+                .setDescription("This command doesn't require any arguments")
                 .setColor(utilities.colors.red)
             
             return message.channel.send(embed)
