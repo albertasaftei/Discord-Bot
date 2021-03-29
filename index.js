@@ -8,6 +8,7 @@ const levels = require('./levels')
 client.on('ready', () => {
     console.log(`Bot ${client.user.tag} connected`)
     levels(client)
+    client.user.setActivity('!help for commands', {type: "PLAYING"})
 
     const dbOptions = {
         keepAlive: true,

@@ -8,7 +8,7 @@ module.exports = {
     description: "Information about your level status",
     maxArgs: 0,
     category: 'Level System',
-    callback: async ({message, args}) => {
+    callback: async ({message}) => {
         let embed = new MessageEmbed()
         .setTitle("Level info")
         .setTimestamp()
@@ -20,13 +20,15 @@ module.exports = {
         })
 
         const {xp, level} = result
-        const percentage = xp*100/200
+        const percentage = xp*100/(level*100)
+        const percentageN = percentage.toFixed(2)
+        
 
         embed.setDescription(`Level information for ${message.author.toString()}`)
             .addFields(
                 { name: 'Level', value: `${level}`, inline: true},
                 { name: 'EXP', value: `${xp}`, inline: true},
-                { name: 'Level up', value: `${percentage}%`, inline: true}
+                { name: 'Progress', value: `${percentageN}%`, inline: true}
             )
         return message.channel.send(embed)
     },
