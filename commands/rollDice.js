@@ -17,39 +17,63 @@ module.exports = {
         .setTimestamp()
         .setColor(utilities.colors.default)
         .setFooter('🍆 Girth Gang 🍆');
-        
-        if (!args.length || isNaN(args[0]) || isNaN(args[1])) {
+
+        try {
+            await profileModel.findOne({
+                userID: message.author.id,
+            })
+        } catch {
+            embed.setTitle("New member detected")
+                .setDescription(`${message.author}, looks like you're a new member\n\n**Inserting your information in the database...**`)
+                .setColor(utilities.colors.admin)
+            return message.channel.send(embed)
+                .then(msg => {
+                setTimeout(() => {
+                    embed.addFields({name: "Data Inserted", value: '✅'})
+                    msg.edit(embed)
+                }, 2000);
+            })
+        }
+
+        let gambled = args[1]
+        if (!args.length || isNaN(args[0]) || isNaN(gambled)) {
             embed
             .setTitle('Invalid Arguments')
             .setDescription(` ${message.author}, something went wrong, try **!roll/!r <dice number> <balance>**`)
             .setColor(utilities.colors.red)
 
-            return message.channe.send(embed)
+            return message.channel.send(embed)
         }
 
         let number = Math.floor(Math.random() * 6) + 1;
 
-        let author = await profileModel.findOne({
+        let {coins} = await profileModel.findOne({
             userID: message.author.id,
         })
-        let balance = author.coins
-
-        if (args[1] <= balance) {
-            if (args[0] == number) {
+        if(args[0] > 6) {
+            embed.setDescription("Insert a number between 1 and 6!")
+                .setColor(utilities.colors.red)
+            return message.channel.send(embed)
+        }
+        if (gambled <= coins) {
+            if (args[0] === number) {
                 try {
                     await profileModel.findOneAndUpdate({
                         userID: message.author.id
                     }, {
                         $inc: {
-                            coins: args[1]*2
+                            coins: gambled*2
                         }
                     })
                     
                 } catch (err) {
                     message.channel.send("Something went wrong, check logs.")
                 }
-
-                embed.setDescription(`${message.author}, congratulations, you won **${args[1]*2}** Girth Cash 💸`)
+                let {coins} = await profileModel.findOne({
+                    userID: message.author.id,
+                })
+                embed.setDescription(`${message.author}, congratulations, you won **${gambled*2}** Girth Cash 💸`)
+                    .addField("Your current balance", `**${coins}** GirthCash`)
                     .setColor(utilities.colors.green)
                 return message.channel.send(embed)
             } else {
@@ -57,17 +81,24 @@ module.exports = {
                     userID: message.author.id
                 }, {
                     $inc: {
-                        coins: -args[1]
+                        coins: -gambled
                     }
                 })
                 embed.addFields(
                         { name: 'Bot', value: `${number}`},
                         { name: 'Your choice', value: `${args[0]}`},
                     )
+                    .addField("Your current balance", `**${coins-gambled}** GirthCash`)
                     .setColor(utilities.colors.default)
                 return message.channel.send(embed)
             }
         } else {
+            let {coins} = await profileModel.findOneAndUpdate({
+                userID: message.author.id
+            })
+            embed.setDescription(`${message.author}, you don't have enough Girth Cash`)
+                .addField("Your current balance", `**${coins}** GirthCash`)
+                .setColor(utilities.colors.red)
             return message.reply("You don't have enough Girth Cash")
         }
     },

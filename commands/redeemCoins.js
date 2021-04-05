@@ -15,13 +15,13 @@ module.exports = {
             .setColor(utilities.colors.admin)
             .setFooter('🍆 Girth Gang 🍆');
 
-        let author = await profileModel.findOne({
+        let {userID: member, coins} = await profileModel.findOne({
             userID: message.author.id
         })
 
         if (message.author.bot) return
 
-        if (author) { // Check if user exists in the database. If true, add the reward to their balance 
+        if (member) { // Check if user exists in the database. If true, add the reward to their balance 
             await profileModel.findOneAndUpdate({
                 userID: message.author.id
             }, {
@@ -31,6 +31,7 @@ module.exports = {
             })
             
             embed.setDescription("You received **10.000** Girthcash 💸")
+                .addField("Your current balance", `**${coins+10000}** GirthCash`)
             return message.channel.send(embed)
         } else {
             embed.setDescription("Looks like you are not inserted in the database")

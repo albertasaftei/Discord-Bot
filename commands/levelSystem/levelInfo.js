@@ -10,21 +10,30 @@ module.exports = {
     category: 'Level System',
     callback: async ({message}) => {
         let embed = new MessageEmbed()
-        .setTitle("Level info")
         .setTimestamp()
         .setColor(utilities.colors.default)
         .setFooter('🍆 Girth Gang 🍆');
 
-        const result = await profileModel.findOne({
+        try {
+            await profileModel.findOne({
+                userID: message.author.id,
+            })
+        } catch {
+            embed.setTitle("Catch Error")
+                .setDescription('Database control error')
+                .setColor(utilities.colors.red)
+            return message.channel.send(embed)
+        }
+        
+        const {xp, level} = await profileModel.findOne({
             userID: message.author.id
         })
-
-        const {xp, level} = result
         const percentage = xp*100/(level*100)
         const percentageN = percentage.toFixed(2)
         
 
-        embed.setDescription(`Level information for ${message.author.toString()}`)
+        embed.setAuthor(`Level information for ${message.author.username}`, message.author.avatarURL())
+            .setDescription('\u200B')
             .addFields(
                 { name: 'Level', value: `${level}`, inline: true},
                 { name: 'EXP', value: `${xp}`, inline: true},

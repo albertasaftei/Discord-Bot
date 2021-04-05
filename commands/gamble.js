@@ -16,31 +16,44 @@ module.exports = {
             .setColor(utilities.colors.default)
             .setFooter('🍆 Girth Gang 🍆');
 
-        let author = await profileModel.findOne({
+        try {
+            await profileModel.findOne({
+                userID: message.author.id,
+            })
+        } catch {
+            embed.setTitle("New member detected")
+                .setDescription(`${message.author}, looks like you're a new member\n\n**Inserting your information in the database...**`)
+                .setColor(utilities.colors.admin)
+            return message.channel.send(embed)
+                .then(msg => {
+                setTimeout(() => {
+                    embed.addFields({name: "Data Inserted", value: '✅'})
+                    msg.edit(embed)
+                }, 2000);
+            })
+        }
+
+        let {coins} = await profileModel.findOne({
             userID: message.author.id,
         })
-        let balance = author.coins
+        let balance = coins
+        let gambled = args[0]
         
-        if(parseInt(args[0]) > balance) {
+        if(gambled > balance) {
             embed.setDescription("You don't have that amount of GirthCash!")
-            .addField("Your current balance", `**${author.coins}** GirthCash`)
+            .addField("Your current balance", `**${balance}** GirthCash`)
             .setColor(utilities.colors.red)
             return message.channel.send(embed)
         }
 
-        if (args[0] <= balance || args[0] === "all") { //if argument is minor than current ballance or is equals to all, continue
-            if (!args[0].length) { //if argument doesn't exist stop
-                embed.setDescription("Something went wrong, try **!gamble <coins amount>**")
-                return message.channel.send(embed)
-            } if (args[0] === "all") { //if arguments equals to "all" but balance is zero, return error
+        if (gambled <= balance || gambled === "all") { //if argument is minor than current ballance or is equals to all, continue
+            if (args[0] === "all") { //if arguments equals to "all" but balance is zero, return error   
                 if (balance == 0) {
                     embed.setDescription("Your GirthCash balance is **0**")
                         .setColor(utilities.colors.red)
                     return message.channel.send(embed)
-                }
-                
+                } 
                 let random = Math.floor(Math.random() * 100)
-                console.log(random)
                 if (random <= 48) {
                         try {
                             await profileModel.findOneAndUpdate({
@@ -51,13 +64,14 @@ module.exports = {
                                 }
                             })
                         } catch(err) {
-                            return message.channel.send("Catch error")
+                            return message.channel.send('Catch error ALL')
                         }
-                        author = await profileModel.findOne({
+                        let {coins} = await profileModel.findOne({
                             userID: message.author.id,
                         })
+
                         embed.setDescription(`${message.author}, congratulations! You won **${balance}** GirthCash!`)
-                        .addField("Your current balance", `**${author.coins}** GirthCash`)
+                        .addField("Your current balance", `**${coins}** GirthCash`)
                         .setColor(utilities.colors.green)
                         
                         return message.channel.send(embed)
@@ -69,32 +83,33 @@ module.exports = {
                             coins: -balance
                         }
                     })
-                    author = await profileModel.findOne({
+                    let {coins} = await profileModel.findOne({
                         userID: message.author.id,
                     })
                     embed.setDescription(`${message.author}, I'm sorry, you lost the gamble.`)
-                    .addField("Your current balance", `**${author.coins}** GirthCash`)
+                    .addField("Your current balance", `**${coins}** GirthCash`)
+                    .setColor(utilities.colors.red)
                     return message.channel.send(embed)
                 }
-            } if (args[0] > 0) {
-                let random = Math.floor(Math.random() < 0.5)
-                if (random == 1) {
+            } if (gambled > 0) {
+                let random = Math.floor(Math.random() * 100)
+                if (random <= 48) {
                     try {
                         await profileModel.findOneAndUpdate({
                             userID: message.author.id
                         }, {
                             $inc: {
-                                coins: args[0]
+                                coins: gambled
                             }
                         })
                     } catch(err) {
-                        return message.channel.send("Catch error")
+                        return message.channel.send("Catch error 2")
                     }
-                    author = await profileModel.findOne({
+                    let {coins} = await profileModel.findOne({
                         userID: message.author.id,
                     })
-                    embed.setDescription(`${message.author}, congratulations! You won **${args[0]}** GirthCash!`)
-                    .addField("Your current balance", `**${author.coins}** GirthCash`)
+                    embed.setDescription(`${message.author}, congratulations! You won **${gambled}** GirthCash!`)
+                    .addField("Your current balance", `**${coins}** GirthCash`)
                     .setColor(utilities.colors.green)
                     return message.channel.send(embed)
                 } else {
@@ -102,26 +117,26 @@ module.exports = {
                         userID: message.author.id
                     }, {
                         $inc: {
-                            coins: -args[0]
+                            coins: -gambled
                         }
                     })
-                    author = await profileModel.findOne({
+                    let {coins} = await profileModel.findOne({
                         userID: message.author.id,
                     })
                     embed.setDescription(`${message.author}, I'm sorry, you lost the gamble.`)
-                    .addField("Your current balance", `**${author.coins}** GirthCash`)
+                    .addField("Your current balance", `**${coins}** GirthCash`)
                     return message.channel.send(embed)
             }
         } else {
             embed.setDescription("Argument must be higher than 0")
-                .addField("Your current balance", `**${author.coins}** GirthCash`)
+                .addField("Your current balance", `**${coins}** GirthCash`)
                 .setColor(utilities.colors.red)
 
             return message.channel.send(embed)
         }
     } else {
         embed.setDescription("You dont have enough cash!")
-            .addField("Your current balance", `**${author.coins}** GirthCash`)
+            .addField("Your current balance", `**${coins}** GirthCash`)
             .setColor(utilities.colors.red)
     }
 },

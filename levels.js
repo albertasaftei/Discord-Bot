@@ -24,21 +24,21 @@ const addXP = async (serverID, userID, xpToAdd, message) => {
         try {
             const result = await profileModel.findOneAndUpdate({
                 serverID,
-                userID
+                userID,
             }, {
                 serverID,
                 userID,
                 $inc: {
-                    xp: xpToAdd
+                    xp: xpToAdd,
                 }
             }, {
                 upsert: true,
                 new: true
             })
-        
+
             let {xp, level} = result
             const needed = getNeededExp(level)  
-    
+
             if (xp >= needed) {
                 ++level
                 xp -= needed

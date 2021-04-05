@@ -1,9 +1,17 @@
 require('dotenv').config();
 const Discord = require('discord.js')
 const client = new Discord.Client()
+const profileModel = require('./models/profileSchema')
+const { MessageEmbed } = require('discord.js')
+const utilities = require('./config.json');
 const WOKCommands = require('wokcommands')
-const profileModel = require("./models/profileSchema")
 const levels = require('./levels')
+
+let embed = new MessageEmbed()
+        .setTitle("⬆️ Level up ⬆️")
+        .setTimestamp()
+        .setColor(utilities.colors.default)
+        .setFooter('🍆 Girth Gang 🍆');
 
 client.on('ready', () => {
     console.log(`Bot ${client.user.tag} connected`)
@@ -42,25 +50,23 @@ client.on('ready', () => {
     ])
 })
 
-client.on('message', async (receivedMessage) => {
+client.on('message', async (message) => {
     let profileData
-        try{
-            if (!receivedMessage.author.bot) {
-                profileData = await profileModel.findOne({ userID: receivedMessage.author.id })
-                if(!profileData) {
-                    let profile = await profileModel.create({
-                        userID: receivedMessage.author.id,
-                        serverID: receivedMessage.guild.id,
-                        coins: 1000,
-                        xp: 0,
-                        level: 1,
-                    });
-                    profile.save()
-                }
+    try{
+        if (!message.author.bot) {
+            profileData = await profileModel.findOne({ userID: message.author.id })
+            if(!profileData) {
+                await profileModel.updateOne({
+                    userID: message.author.id,
+                    serverID: message.guild.id,      
+                }, {
+                    coins: 1000
+                });
             }
-        }catch(err) {
-            console.log(err)
         }
+    }catch(err) {
+        console.log(err)
+    }
 })
 
 client.login()

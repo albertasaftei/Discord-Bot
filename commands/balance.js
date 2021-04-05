@@ -14,10 +14,27 @@ module.exports = {
         .setColor(utilities.colors.default)
         .setFooter('🍆 Girth Gang 🍆');
 
-        let user = await profileModel.findOne({ userID: message.author.id })
+        try {
+            await profileModel.findOne({
+                userID: message.author.id,
+            })
+        } catch {
+            embed.setTitle("New member detected")
+                .setDescription(`${message.author}, looks like you're a new member\n\n**Inserting your information in the database...**`)
+                .setColor(utilities.colors.admin)
+            return message.channel.send(embed)
+                .then(msg => {
+                setTimeout(() => {
+                    embed.addFields({name: "Data Inserted", value: '✅'})
+                    msg.edit(embed)
+                }, 2000);
+            })
+        }
+        
+        let {userID: member, coins} = await profileModel.findOne({ userID: message.author.id })
 
-        if(user) {
-            embed.setDescription(`${message.author}, your GirtCash balance is: ${user.coins} 💸`)
+        if(member) {
+            embed.setDescription(`${message.author}, your GirtCash balance is: ${coins} 💸`)
             message.channel.send(embed)
         }
     }

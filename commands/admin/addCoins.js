@@ -39,7 +39,7 @@ module.exports = {
             }
 
             embed.setDescription(`Admin has added ${args[0]} GirthCash to ${message.mentions.users.first()}`)
-                .setColor(utilities.colors.green)
+                .setColor(utilities.colors.admin)
             return message.channel.send(embed)
         }
     }
